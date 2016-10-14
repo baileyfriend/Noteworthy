@@ -21,6 +21,8 @@
         android:layout_alignParentEnd="true"
         android:onClick="deleteNote"
         android:layout_alignParentRight="true"
-        android:text="Delete" />
+        android:text="Delete"
+        style="?android:attr/borderlessButtonStyle"
+        />
 
 </RelativeLayout>
