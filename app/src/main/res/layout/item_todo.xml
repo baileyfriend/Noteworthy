@@ -12,7 +12,9 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:text="Add a note"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:onClick="openNote"
+        />
 
     <Button
         android:id="@+id/note_delete"

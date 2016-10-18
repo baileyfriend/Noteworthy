@@ -1,6 +1,7 @@
 package com.dev.baileyfreund.notes;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -22,6 +23,8 @@ import com.dev.baileyfreund.notes.db.NoteContract;
 import com.dev.baileyfreund.notes.db.NoteDbHelper;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.Thing;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -131,8 +134,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void deleteNote(View view) {
         View parent = (View) view.getParent();
-        TextView taskTextView = (TextView) parent.findViewById(R.id.note_title);
-        String note = String.valueOf(taskTextView.getText());
+        TextView noteTextView = (TextView) parent.findViewById(R.id.note_title);
+        String note = String.valueOf(noteTextView.getText());
         SQLiteDatabase db = mHelper.getWritableDatabase();
         db.delete(NoteContract.NoteEntry.TABLE,
                 NoteContract.NoteEntry.COL_NOTE_TITLE + " = ?",
@@ -140,6 +143,32 @@ public class MainActivity extends AppCompatActivity {
         db.close();
         updateUI();
     }
+
+    public void openNote(View selectedNote) {
+        Intent intent = new Intent(this, openedNoteActivity.class);
+        View parent = (View) selectedNote.getParent();
+        TextView noteTextView = (TextView) parent.findViewById(R.id.note_title);
+        SQLiteDatabase db = mHelper.getReadableDatabase();
+        Cursor cursor = db.query(NoteContract.NoteEntry.TABLE,
+                new String[]{NoteContract.NoteEntry._ID, NoteContract.NoteEntry.COL_NOTE_TITLE},
+                null, null, null, null, null);
+        while(cursor.moveToNext()){
+            int i = cursor.getColumnIndex(NoteContract.NoteEntry.COL_NOTE_TITLE);
+            if (selectedNote.getId() == R.id.note_title){
+                openedNoteActivity.setNoteIndex(i);
+                startActivity(intent);
+            }
+        }
+
+    }
+
+//    public void sendMessage(View view) {
+//        Intent intent = new Intent(this, DisplayMessageActivity.class);
+//        EditText editText = (EditText) findViewById(R.id.edit_message);
+//        String message = editText.getText().toString();
+//        intent.putExtra(EXTRA_MESSAGE, message);
+//        startActivity(intent);
+//    }
 
     /**********
      * This is currently commented out because we do not yet need the App Indexing API. It is left
