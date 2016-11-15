@@ -2,6 +2,7 @@ package com.dev.baileyfreund.notes;
 
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -94,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
         updateUI();
     }
 
-
     /**
      * This method will update what the user sees on the screen.
      * It will check to see if there is a new note added to the
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
                 final EditText taskEditText = new EditText(this);
                 AlertDialog dialog = new AlertDialog.Builder(this)
                         .setTitle("Add a new note")
-                        .setMessage("What do you want to take note of?")
+                        .setMessage("Type noteworthy note here")
                         .setView(taskEditText)
                         .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                             @Override
@@ -218,7 +218,11 @@ public class MainActivity extends AppCompatActivity {
         updateUI();
     }
 
-
+    @Override
+    public void onClick(View v){
+        Intent i = new Intent(getApplicationContext(),openNote.class);
+        startActivity(i);
+    }
 
 
 }

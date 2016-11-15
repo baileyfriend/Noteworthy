@@ -41,7 +41,7 @@ public class NoteDbHelper extends SQLiteOpenHelper {
                 + " ( " + NoteContract.NoteEntry._ID
                 + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + NoteContract.NoteEntry.COL_NOTE_TITLE
-                + " TEXT NOT NULL);";
+                + " TEXT NOT NULL)" + NoteContract.NoteEntry.COL_NOTE_BODY;
 
         db.execSQL(createTable);
     }

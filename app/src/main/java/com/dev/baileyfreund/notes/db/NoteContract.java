@@ -41,5 +41,12 @@ public class NoteContract {
          * This string contains the title of the note.
          */
         public static final String COL_NOTE_TITLE = "title";
+
+        /**
+         * This string contains the body of the note.
+         */
+        public static final String COL_NOTE_BODY = "body";
+
+
     }
 }

@@ -31,3 +31,14 @@ dependencies {
     compile 'com.google.android.gms:play-services-ads:9.6.1'
     compile 'com.google.android.gms:play-services-appindexing:9.6.1'
 }
+
+//apply plugin: "com.vanniktech.android.junit.jacoco"
+
+//buildscript {
+//    repositories {
+//        mavenCentral()
+//    }
+//    dependencies {
+//        classpath 'com.vanniktech:gradle-android-junit-jacoco-plugin:0.3.0'
+//    }
+//}
