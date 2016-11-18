@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog dialog = new AlertDialog.Builder(this)
                         .setTitle("Add a new note")
                         .setMessage("Type noteworthy note here")
-                        .setView(taskEditText)
+                        .setView(taskEditText) //@TODO: 11/15/16 Create a second EditText in the alertDialog for the title, then pass that value to the col_note_title value, and the other to the col_note_body value in the db
                         .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -218,9 +218,18 @@ public class MainActivity extends AppCompatActivity {
         updateUI();
     }
 
-    @Override
-    public void onClick(View v){
+    /**
+     * This method is called whenever a note is clicked in the Main activity.
+     * When this method is called, it passes the selected note's title to the next activity
+     * (openNote) so that the note can be loaded into the primary TextView on that activity.
+     * @param v is the view being clicked on - in this case it is a TextView
+     */
+    public void onNoteClick(View v){
+        //Get the current intent when note is clicked
         Intent i = new Intent(getApplicationContext(),openNote.class);
+        //Gets the string in the textview and passes it to the next activity to be displayed
+        i.putExtra("note_title", (CharSequence) noteTextView);
+        //Then Start the activity
         startActivity(i);
     }
 

@@ -9,6 +9,8 @@ public class openNote extends AppCompatActivity {
     String title = getNoteTitle();
     int id = getNoteId();
     String body = getNoteBody();
+    //Extras are passed from main activity, passes the note_title
+    Bundle extras = getIntent().getExtras();
 
 
     @Override
@@ -17,6 +19,11 @@ public class openNote extends AppCompatActivity {
         setContentView(R.layout.activity_open_note);
         TextView t = (TextView)findViewById(R.id.noteBody);
         t.setText(body);
+        //Check that there is something in the extras (it's not empty)
+        if(extras != null){
+            //If there is then set the title to the passed string from note_title
+            String title = extras.getString("note_title");
+        }
     }
 
     public int getNoteId(){
@@ -28,6 +35,7 @@ public class openNote extends AppCompatActivity {
     }
 
     public String getNoteTitle(){
+
         return selectedNote.getTitle();
     }
 
