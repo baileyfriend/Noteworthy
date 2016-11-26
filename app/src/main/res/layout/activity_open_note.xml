@@ -10,11 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.dev.baileyfreund.notes.openNote">
 
-    <TextView
-        android:id="@+id/noteBody"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:text="NOTE SHOULD BE HERE"
-        android:layout_width="wrap_content" />
+
+
 </RelativeLayout>

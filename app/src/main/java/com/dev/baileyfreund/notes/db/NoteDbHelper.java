@@ -13,6 +13,7 @@ import android.content.Context;
  */
 public class NoteDbHelper extends SQLiteOpenHelper {
 
+
     /**
      * This method is the constructor. Given context, the
      * constructor will instantiate a NoteContract database
@@ -41,7 +42,7 @@ public class NoteDbHelper extends SQLiteOpenHelper {
                 + " ( " + NoteContract.NoteEntry._ID
                 + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + NoteContract.NoteEntry.COL_NOTE_TITLE
-                + " TEXT NOT NULL)" + NoteContract.NoteEntry.COL_NOTE_BODY;
+                + " TEXT NOT NULL," + NoteContract.NoteEntry.COL_NOTE_BODY + ");";
 
         db.execSQL(createTable);
     }

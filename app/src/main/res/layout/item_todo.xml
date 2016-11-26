@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/note_title"
+        android:id="@+id/note_item"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -14,17 +14,7 @@
         android:layout_width="wrap_content"
         android:clickable="true"
         android:onClick="onNoteClick"
-        />
-
-    <Button
-        android:id="@+id/note_delete"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:onClick="deleteNote"
-        android:layout_alignParentRight="true"
-        android:text="Delete"
-        style="?android:attr/borderlessButtonStyle"
+        android:textSize="24dp"
         />
 
 </RelativeLayout>

@@ -14,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -60,12 +59,13 @@ public class MainActivity extends AppCompatActivity {
     /**
      * This will be the java representation of the DeleteButton in the main activity.
      */
-    private Button deleteButton;
+    //private Button deleteButton;
     /**
      * This will be the java representation of the Toolbar in the main activity.
      */
     private Toolbar toolbar;
 
+    public final static String EXTRA_NOTE = "com.dev.baileyfreund.notes.note_item";
 
     /**
      * This method will set up the app when it is created or
@@ -89,8 +89,9 @@ public class MainActivity extends AppCompatActivity {
 
         mHelper = new NoteDbHelper(this); //initializing the dbhelper
         mNoteListView = (ListView) findViewById(R.id.list_todo);
-        noteTextView = (TextView) findViewById(R.id.note_title);
-        deleteButton = (Button) findViewById(R.id.note_delete);
+        noteTextView = (TextView) findViewById(R.id.note_item);
+        //deleteButton = (Button) findViewById(R.id.note_delete);
+        //noteTextView.setTextSize(16);
 
         updateUI();
     }
@@ -119,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         if (mAdapter == null) {
             mAdapter = new ArrayAdapter<String>(this,
                     R.layout.item_todo, //what view to use for the items
-                    R.id.note_title, //where to put the string of data
+                    R.id.note_item, //where to put the string of data
                     noteList); //where to get all the data
             mNoteListView.setAdapter(mAdapter); //set it as the adapter for the ListView instance
         } else {
@@ -196,27 +197,29 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * This method will delete a note from the screen and
-     * remove it from the database. It does this by obtaining
-     * the view and then scanning through it to find the
-     * intended note to be deleted. Once deleted, the database
-     * is closed and the UI updated.
-     *
-     * @param view is the current view on the screen that the
-     *             method uses to find which note to be deleted.
-     */
-    public void deleteNote(View view) {
-        View parent = (View) view.getParent();
-        TextView taskTextView = (TextView) parent.findViewById(R.id.note_title);
-        String note = String.valueOf(taskTextView.getText());
-        SQLiteDatabase db = mHelper.getWritableDatabase();
-        db.delete(NoteContract.NoteEntry.TABLE,
-                NoteContract.NoteEntry.COL_NOTE_TITLE + " = ?",
-                new String[]{note});
-        db.close();
-        updateUI();
-    }
+
+    //currently unused - keeping just in case for now - @TODO delete before production
+//    /**
+//     * This method will delete a note from the screen and
+//     * remove it from the database. It does this by obtaining
+//     * the view and then scanning through it to find the
+//     * intended note to be deleted. Once deleted, the database
+//     * is closed and the UI updated.
+//     *
+//     * @param view is the current view on the screen that the
+//     *             method uses to find which note to be deleted.
+//     */
+//    public void deleteNote(View view) {
+//        View parent = (View) view.getParent();
+//        TextView taskTextView = (TextView) parent.findViewById(R.id.note_item);
+//        String note = String.valueOf(taskTextView.getText());
+//        SQLiteDatabase db = mHelper.getWritableDatabase();
+//        db.delete(NoteContract.NoteEntry.TABLE,
+//                NoteContract.NoteEntry.COL_NOTE_TITLE + " = ?",
+//                new String[]{note});
+//        db.close();
+//        updateUI();
+//   }
 
     /**
      * This method is called whenever a note is clicked in the Main activity.
@@ -225,12 +228,15 @@ public class MainActivity extends AppCompatActivity {
      * @param v is the view being clicked on - in this case it is a TextView
      */
     public void onNoteClick(View v){
-        //Get the current intent when note is clicked
-        Intent i = new Intent(getApplicationContext(),openNote.class);
+        //Creates a new intent to go to the openNote Activity
+        Intent intent = new Intent(this, openNote.class);
+        TextView textView = (TextView) findViewById(R.id.note_item);
         //Gets the string in the textview and passes it to the next activity to be displayed
-        i.putExtra("note_title", (CharSequence) noteTextView);
+        String note = textView.getText().toString();
+        //the extra note is the note contained in the clicked note
+        intent.putExtra(EXTRA_NOTE, note);
         //Then Start the activity
-        startActivity(i);
+        startActivity(intent);
     }
 
 

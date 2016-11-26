@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "220297322592",
+    "firebase_url": "https://noteworthy-e8caf.firebaseio.com",
+    "project_id": "noteworthy-e8caf",
+    "storage_bucket": "noteworthy-e8caf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:220297322592:android:ece4ff4c9db17097",
+        "android_client_info": {
+          "package_name": "com.dev.baileyfreund.notes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "220297322592-vffn6psh49h8ek01eq3g5m5bsr77tlma.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dev.baileyfreund.notes",
+            "certificate_hash": "3299C2259C9864024C525606D7B782BFD4A403D7"
+          }
+        },
+        {
+          "client_id": "220297322592-768hf6scnfb3jpknavhf5krsqjek359h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9_6bkzXb1h3vC_1Es63g3bIL3CvQIF6g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "220297322592-768hf6scnfb3jpknavhf5krsqjek359h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
