@@ -1,5 +1,6 @@
 package com.dev.baileyfreund.notes;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -79,38 +80,39 @@ public class openNote extends AppCompatActivity {
         goToMain();
     }
 // @TODO implement this method and add it to the onClick listener for the save icon in the menu of this activity - remember to change the onclick for the saveIcon!!!!!!!!!!!
-//    /**
-//     * This method will delete a note from the screen and
-//     * remove it from the database. It does this by obtaining
-//     * the view and then scanning through it to find the
-//     * intended note to be deleted. Once deleted, the database
-//     * is closed and the UI updated.
-//     *
-//     * @param saveIcon is the current view on the screen that the
-//     *             method uses to find which note to be deleted.
-//     */
-//    public void saveNote(MenuItem saveIcon) {
-//        String note = String.valueOf(editText.getText());
-//        // Gets the data repository in write mode
-//        SQLiteDatabase db = mHelper.getWritableDatabase();
-//        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-//
-//        // New value for one column
-//        ContentValues values = new ContentValues();
-//        values.put(FeedEntry.COLUMN_NAME_TITLE, title);
-//
-//        // Which row to update, based on the title
-//        String selection = FeedEntry.COLUMN_NAME_TITLE + " LIKE ?";
-//        String[] selectionArgs = { "MyTitle" };
-//
-//        int count = db.update(
-//                FeedReaderDbHelper.FeedEntry.TABLE_NAME,
-//                values,
-//                selection,
-//                selectionArgs);
-//        db.close();
-//        goToMain();
-//    }
+    /**
+     * This method will delete a note from the screen and
+     * remove it from the database. It does this by obtaining
+     * the view and then scanning through it to find the
+     * intended note to be deleted. Once deleted, the database
+     * is closed and the UI updated.
+     *
+     * @param saveIcon is the current view on the screen that the
+     *             method uses to find which note to be deleted.
+     */
+    public void saveNote(MenuItem saveIcon) {
+        String note = String.valueOf(editText.getText());
+        // Gets the data repository in write mode
+        //SQLiteDatabase db = mHelper.getWritableDatabase();
+        SQLiteDatabase db = mHelper.getReadableDatabase();
+
+        // New value for one column
+        ContentValues values = new ContentValues();
+        values.put(NoteContract.NoteEntry.COL_NOTE_TITLE, note);
+
+        // Which row to update, based on the title
+        Intent intent = new Intent();
+        String selection = NoteContract.NoteEntry.COL_NOTE_TITLE + " LIKE ?";
+        String[] selectionArgs = { intent.getStringExtra(MainActivity.EXTRA_NOTE) };
+
+        int count = db.update(
+                mHelper.NoteEntry.COL_NOTE_TITLE,
+                values,
+                selection,
+                selectionArgs);
+        db.close();
+        goToMain();
+    }
 
     /**
      * This is called when the current note is deleted. Because the current note has been deleted,

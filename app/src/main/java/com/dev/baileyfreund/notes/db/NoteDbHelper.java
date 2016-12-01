@@ -4,6 +4,7 @@ package com.dev.baileyfreund.notes.db;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
+import android.provider.BaseColumns;
 
 /**
  * This class assists with the making of a database that
@@ -39,9 +40,9 @@ public class NoteDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(final SQLiteDatabase db) {
         String createTable = "CREATE TABLE " + NoteContract.NoteEntry.TABLE
-                + " ( " + NoteContract.NoteEntry._ID
+                + " ( " + NoteEntry._ID
                 + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + NoteContract.NoteEntry.COL_NOTE_TITLE
+                + NoteEntry.COL_NOTE_TITLE
                 + " TEXT NOT NULL," + NoteContract.NoteEntry.COL_NOTE_BODY + ");";
 
         db.execSQL(createTable);
@@ -61,7 +62,32 @@ public class NoteDbHelper extends SQLiteOpenHelper {
     public void onUpgrade(final SQLiteDatabase db,
                           final int oldVersion,
                           final int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + NoteContract.NoteEntry.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + NoteEntry.TABLE);
         onCreate(db);
+    }
+
+    /**
+     * This class is an object that can be used to create
+     * a note entry. It contains a string for the note itself
+     * and a string for the title of the note.
+     */
+    public static class NoteEntry implements BaseColumns {
+
+        /**
+         * This String contains the actual note part of the note.
+         */
+        public static final String TABLE = "notes";
+
+        /**
+         * This string contains the title of the note.
+         */
+        public static final String COL_NOTE_TITLE = "title";
+
+        /**
+         * This string contains the body of the note.
+         */
+        public static final String COL_NOTE_BODY = "body";
+
+
     }
 }

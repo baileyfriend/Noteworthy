@@ -1,8 +1,6 @@
 
 package com.dev.baileyfreund.notes.db;
 
-import android.provider.BaseColumns;
-
 /**
  * This class represents the database set up that is made up
  * of objects of notes. It contains the class necessary to make
@@ -25,28 +23,28 @@ public class NoteContract {
      */
     public static final int DB_VERSION = 1;
 
-    /**
-     * This class is an object that can be used to create
-     * a note entry. It contains a string for the note itself
-     * and a string for the title of the note.
-     */
-    public static class NoteEntry implements BaseColumns {
-
-        /**
-         * This String contains the actual note part of the note.
-         */
-        public static final String TABLE = "notes";
-
-        /**
-         * This string contains the title of the note.
-         */
-        public static final String COL_NOTE_TITLE = "title";
-
-        /**
-         * This string contains the body of the note.
-         */
-        public static final String COL_NOTE_BODY = "body";
-
-
-    }
+//    /**
+//     * This class is an object that can be used to create
+//     * a note entry. It contains a string for the note itself
+//     * and a string for the title of the note.
+//     */
+//    public static class NoteEntry implements BaseColumns {
+//
+//        /**
+//         * This String contains the actual note part of the note.
+//         */
+//        public static final String TABLE = "notes";
+//
+//        /**
+//         * This string contains the title of the note.
+//         */
+//        public static final String COL_NOTE_TITLE = "title";
+//
+//        /**
+//         * This string contains the body of the note.
+//         */
+//        public static final String COL_NOTE_BODY = "body";
+//
+//
+//    }
 }
