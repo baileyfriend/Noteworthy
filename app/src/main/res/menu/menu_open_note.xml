@@ -7,7 +7,7 @@
         android:icon="@android:drawable/ic_menu_save"
         android:title="Delete Note"
         app:showAsAction="always"
-        android:onClick="deleteNote"
+        android:onClick="saveNote"
         />
 
     <item
