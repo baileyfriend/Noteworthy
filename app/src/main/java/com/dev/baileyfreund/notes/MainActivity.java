@@ -130,11 +130,6 @@ public class MainActivity extends AppCompatActivity {
         }
         cursor.close();
         db.close();
-
-//        int toolbarWidth = toolbar.getWidth();
-//        int delBtnWidth = deleteButton.getWidth();
-//        int noteTextViewWidth = toolbarWidth - delBtnWidth - 5;
-//        noteTextView.setWidth(noteTextViewWidth);
     }
 
     /**

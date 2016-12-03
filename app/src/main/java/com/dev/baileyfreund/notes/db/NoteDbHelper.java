@@ -1,9 +1,10 @@
 
 package com.dev.baileyfreund.notes.db;
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.content.Context;
 
 /**
  * This class assists with the making of a database that
@@ -42,7 +43,7 @@ public class NoteDbHelper extends SQLiteOpenHelper {
                 + " ( " + NoteContract.NoteEntry._ID
                 + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + NoteContract.NoteEntry.COL_NOTE_TITLE
-                + " TEXT NOT NULL," + NoteContract.NoteEntry.COL_NOTE_BODY + ");";
+                + " TEXT NOT NULL," + ");";
 
         db.execSQL(createTable);
     }
@@ -63,5 +64,20 @@ public class NoteDbHelper extends SQLiteOpenHelper {
                           final int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + NoteContract.NoteEntry.TABLE);
         onCreate(db);
+    }
+
+    /**
+     *This method updates a single row, as selected by rowId, with the value passed in name
+     *
+     * @param rowId the row to be updated
+     *
+     */
+    public void updateRow(long rowId, String name) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues args = new ContentValues();
+        args.put("COL_NOTE_TITLE", name);
+
+        db.update(NoteContract.NoteEntry.TABLE, args, "id=" + rowId, null);
     }
 }

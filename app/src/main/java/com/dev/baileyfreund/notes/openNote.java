@@ -1,7 +1,8 @@
 package com.dev.baileyfreund.notes;
 
-import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,9 +15,14 @@ import com.dev.baileyfreund.notes.db.NoteContract;
 import com.dev.baileyfreund.notes.db.NoteDbHelper;
 
 public class openNote extends AppCompatActivity {
+    /**
+     * This string represents a tag for the openNote Activity.
+     */
+    private static final String TAG = "openNote Activity";
 
     /*
-     * @TODO generate some comment on this
+     * @This is the edit text on the open note activity page - contains the note selected
+     * in the main activity
      */
     private EditText editText;
 
@@ -79,37 +85,82 @@ public class openNote extends AppCompatActivity {
         db.close();
         goToMain();
     }
-// @TODO implement this method and add it to the onClick listener for the save icon in the menu of this activity - remember to change the onclick for the saveIcon!!!!!!!!!!!
+
     /**
-     * This method will delete a note from the screen and
-     * remove it from the database. It does this by obtaining
-     * the view and then scanning through it to find the
-     * intended note to be deleted. Once deleted, the database
-     * is closed and the UI updated.
+     * This method will save the note from the screen and
+     * save it to the database.
      *
      * @param saveIcon is the current view on the screen that the
-     *             method uses to find which note to be deleted.
+     *             method uses to find which note to be saved.
      */
     public void saveNote(MenuItem saveIcon) {
+        Intent intent = getIntent();
+        String originalNote = intent.getStringExtra(MainActivity.EXTRA_NOTE);
         String note = String.valueOf(editText.getText());
-        // Gets the data repository in write mode
         SQLiteDatabase db = mHelper.getReadableDatabase();
 
-        // New value for one column
-        ContentValues values = new ContentValues();
-        values.put(NoteContract.NoteEntry.COL_NOTE_TITLE, note);
+        long id = getIdFromNote(originalNote);
+        mHelper.updateRow(id, note);
 
-        // Which row to update, based on the title
-        String selection = NoteContract.NoteEntry.COL_NOTE_TITLE + " LIKE ?";
-        String[] selectionArgs = { "note" };
-
-        int count = db.update(
-                NoteContract.DB_NAME,
-                values,
-                selection,
-                selectionArgs);
-        db.close();
         goToMain();
+
+}
+
+//        // Gets the data repository in write mode
+//        //SQLiteDatabase db = mHelper.getReadableDatabase();
+
+//
+//        // New value for one column
+//        ContentValues values = new ContentValues();
+//        values.put(NoteContract.NoteEntry.COL_NOTE_TITLE, note);
+//        Log.d(TAG, "CONTENT VALUES: " + values);
+//
+//        // Which row to update, based on the title
+//        String selection = NoteContract.NoteEntry.COL_NOTE_TITLE + " LIKE ?";
+//        Log.d(TAG, "The selection is: " + selection);
+//        String[] selectionArgs = { getIdFromNote(originalNote)+  "" };
+//        Log.d(TAG, "PAST SELECTION ARGS " + originalNote);
+//
+//        int count = db.update(
+//                NoteContract.DB_NAME,
+//                values,
+//                selection,
+//                selectionArgs);
+//        Log.d(TAG, "count " + count);
+//        db.close();
+
+
+        //        String query = "UPDATE " + NoteContract.DB_NAME  +
+//                "SET COL_NOTE_TITLE = note\n" +
+//                "WHERE COL_NOTE_TITLE = originalNote;";
+//        Cursor cursor = db.query(NoteContract.NoteEntry.TABLE,
+//                new String[]{NoteContract.NoteEntry._ID, NoteContract.NoteEntry.COL_NOTE_TITLE},
+//                null, null, null, null, null);
+//        while (cursor.moveToNext()) {
+//            int i = cursor.getColumnIndex(NoteContract.NoteEntry.COL_NOTE_TITLE);
+//            noteList.add(cursor.getString(i));//gets the string at the index in the database
+//
+//
+//        }
+
+    private void updateItemForId(long id){
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        Cursor cursor = db.getRow(id);
+        if(cursor.moveToFirst()){
+            String note = String.valueOf(editText.getText());
+            mHelper.updateRow(id, note);
+        }
+        cursor.close();
+    }
+
+
+
+    public long getIdFromNote(String note){
+        String query = "SELECT rowid" +
+                " FROM " + NoteContract.DB_NAME +
+                " WHERE " + NoteContract.NoteEntry.COL_NOTE_TITLE + " = ?;";
+        SQLiteDatabase db = mHelper.getReadableDatabase();
+        return DatabaseUtils.longForQuery(db, query, new String[]{ note });
     }
 
     /**

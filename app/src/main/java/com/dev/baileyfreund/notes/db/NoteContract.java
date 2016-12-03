@@ -42,10 +42,10 @@ public class NoteContract {
          */
         public static final String COL_NOTE_TITLE = "title";
 
-        /**
-         * This string contains the body of the note.
-         */
-        public static final String COL_NOTE_BODY = "body";
+//        /**
+//         * This string contains the body of the note.
+//         */
+//        public static final String COL_NOTE_BODY = "body"; @TODO Implement this - currently only have title of notes
 
 
     }
