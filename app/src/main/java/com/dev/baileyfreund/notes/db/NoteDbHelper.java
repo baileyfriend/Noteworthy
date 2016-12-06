@@ -77,10 +77,11 @@ public class NoteDbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues args = new ContentValues();
-        args.put("COL_NOTE_TITLE", name);
+        args.put("title", name);
 
-        db.update(NoteContract.NoteEntry.TABLE, args, "id=" + rowId, null);
+        db.update(NoteContract.NoteEntry.TABLE, args, "_id=" + rowId, null);
     }
+
 
     /**
      * This method gets the row id of the row that the cursor passed as a param is currently at

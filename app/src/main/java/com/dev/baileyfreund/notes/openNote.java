@@ -6,6 +6,7 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -32,6 +33,19 @@ public class openNote extends AppCompatActivity {
      */
     private NoteDbHelper mHelper;
 
+
+    /**
+     * This method will set up the activity whenever a note is
+     * openend. When opened, the app will set the content view,
+     * make a toolbar, and initialize the Database Helper and the
+     * Note List View.
+     *
+     * @param savedInstanceState This saved state is a previous
+     *                           setup of the app that the user
+     *                           had. If there is a saved instance,
+     *                           the app will be set up in that manner
+     *                           using this parameter.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,20 +115,19 @@ public class openNote extends AppCompatActivity {
 
         long id = getIdFromNote(originalNote);
         updateItemForId(id);
-        //mHelper.updateRow(id, note);
         goToMain();
 
     }
 
     private void updateItemForId(long id){
         SQLiteDatabase db = mHelper.getWritableDatabase();
-        //String query = "Select _ID from notes Where _ID = " + id +  ";"
         Cursor cursor = db.query(NoteContract.NoteEntry.TABLE,
                 new String[]{NoteContract.NoteEntry._ID, NoteContract.NoteEntry.COL_NOTE_TITLE},
                 null, null, null, null, null);
         while(cursor.moveToNext()){
             if(cursor.getLong(0) == id) {
                 String note = String.valueOf(editText.getText());
+                Log.d(TAG, "Note: " + note);
                 mHelper.updateRow(id, note);
             }
         }
