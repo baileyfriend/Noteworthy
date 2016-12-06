@@ -100,64 +100,38 @@ public class openNote extends AppCompatActivity {
         SQLiteDatabase db = mHelper.getReadableDatabase();
 
         long id = getIdFromNote(originalNote);
-        mHelper.updateRow(id, note);
-
+        updateItemForId(id);
+        //mHelper.updateRow(id, note);
         goToMain();
 
-}
-
-//        // Gets the data repository in write mode
-//        //SQLiteDatabase db = mHelper.getReadableDatabase();
-
-//
-//        // New value for one column
-//        ContentValues values = new ContentValues();
-//        values.put(NoteContract.NoteEntry.COL_NOTE_TITLE, note);
-//        Log.d(TAG, "CONTENT VALUES: " + values);
-//
-//        // Which row to update, based on the title
-//        String selection = NoteContract.NoteEntry.COL_NOTE_TITLE + " LIKE ?";
-//        Log.d(TAG, "The selection is: " + selection);
-//        String[] selectionArgs = { getIdFromNote(originalNote)+  "" };
-//        Log.d(TAG, "PAST SELECTION ARGS " + originalNote);
-//
-//        int count = db.update(
-//                NoteContract.DB_NAME,
-//                values,
-//                selection,
-//                selectionArgs);
-//        Log.d(TAG, "count " + count);
-//        db.close();
-
-
-        //        String query = "UPDATE " + NoteContract.DB_NAME  +
-//                "SET COL_NOTE_TITLE = note\n" +
-//                "WHERE COL_NOTE_TITLE = originalNote;";
-//        Cursor cursor = db.query(NoteContract.NoteEntry.TABLE,
-//                new String[]{NoteContract.NoteEntry._ID, NoteContract.NoteEntry.COL_NOTE_TITLE},
-//                null, null, null, null, null);
-//        while (cursor.moveToNext()) {
-//            int i = cursor.getColumnIndex(NoteContract.NoteEntry.COL_NOTE_TITLE);
-//            noteList.add(cursor.getString(i));//gets the string at the index in the database
-//
-//
-//        }
+    }
 
     private void updateItemForId(long id){
         SQLiteDatabase db = mHelper.getWritableDatabase();
-        Cursor cursor = db.getRow(id);
-        if(cursor.moveToFirst()){
-            String note = String.valueOf(editText.getText());
-            mHelper.updateRow(id, note);
+        //String query = "Select _ID from notes Where _ID = " + id +  ";"
+        Cursor cursor = db.query(NoteContract.NoteEntry.TABLE,
+                new String[]{NoteContract.NoteEntry._ID, NoteContract.NoteEntry.COL_NOTE_TITLE},
+                null, null, null, null, null);
+        while(cursor.moveToNext()){
+            if(cursor.getLong(0) == id) {
+                String note = String.valueOf(editText.getText());
+                mHelper.updateRow(id, note);
+            }
         }
         cursor.close();
+        db.close();
+        goToMain();
     }
 
 
-
+    /**
+     * Should get the row's id from the string of the note
+     * @param note the note that you want to get the id of
+     * @return the id of the note string as a long
+     */
     public long getIdFromNote(String note){
         String query = "SELECT rowid" +
-                " FROM " + NoteContract.DB_NAME +
+                " FROM " + NoteContract.NoteEntry.TABLE +
                 " WHERE " + NoteContract.NoteEntry.COL_NOTE_TITLE + " = ?;";
         SQLiteDatabase db = mHelper.getReadableDatabase();
         return DatabaseUtils.longForQuery(db, query, new String[]{ note });

@@ -3,6 +3,7 @@ package com.dev.baileyfreund.notes.db;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -79,5 +80,14 @@ public class NoteDbHelper extends SQLiteOpenHelper {
         args.put("COL_NOTE_TITLE", name);
 
         db.update(NoteContract.NoteEntry.TABLE, args, "id=" + rowId, null);
+    }
+
+    /**
+     * This method gets the row id of the row that the cursor passed as a param is currently at
+     * @param cursor this is the cursor that you want to know the row of
+     * @return The id of the row that the cursor is at
+     */
+    public long getRow(Cursor cursor){
+        return cursor.getLong(cursor.getColumnIndex("_id"));
     }
 }
