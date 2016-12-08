@@ -32,9 +32,6 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".openNote" />
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login"></activity>
     </application>
 
 </manifest>
