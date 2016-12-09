@@ -193,29 +193,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //currently unused - keeping just in case for now - @TODO delete before production
-//    /**
-//     * This method will delete a note from the screen and
-//     * remove it from the database. It does this by obtaining
-//     * the view and then scanning through it to find the
-//     * intended note to be deleted. Once deleted, the database
-//     * is closed and the UI updated.
-//     *
-//     * @param view is the current view on the screen that the
-//     *             method uses to find which note to be deleted.
-//     */
-//    public void deleteNote(View view) {
-//        View parent = (View) view.getParent();
-//        TextView taskTextView = (TextView) parent.findViewById(R.id.note_item);
-//        String note = String.valueOf(taskTextView.getText());
-//        SQLiteDatabase db = mHelper.getWritableDatabase();
-//        db.delete(NoteContract.NoteEntry.TABLE,
-//                NoteContract.NoteEntry.COL_NOTE_TITLE + " = ?",
-//                new String[]{note});
-//        db.close();
-//        updateUI();
-//   }
-
     /**
      * This method is called whenever a note is clicked in the Main activity.
      * When this method is called, it passes the selected note's title to the next activity
@@ -225,13 +202,20 @@ public class MainActivity extends AppCompatActivity {
     public void onNoteClick(View v){
         //Creates a new intent to go to the openNote Activity
         Intent intent = new Intent(this, openNote.class);
-        TextView textView = (TextView) findViewById(R.id.note_item);
-        //Gets the string in the textview and passes it to the next activity to be displayed
-        String note = textView.getText().toString();
-        //the extra note is the note contained in the clicked note
-        intent.putExtra(EXTRA_NOTE, note);
-        //Then Start the activity
-        startActivity(intent);
+        if (v instanceof TextView) {
+            TextView textView = (TextView) v;
+            //Gets the string in the textview and passes it to the next activity to be displayed
+            String note = textView.getText().toString();
+            //the extra note is the note contained in the clicked note
+            intent.putExtra(EXTRA_NOTE, note);
+            Log.d(TAG, "Note selected for open note: " + note);
+            //Then Start the activity
+            startActivity(intent);
+        }
+        else {
+            Log.d(TAG, "Note Click failed");
+        }
+
     }
 
 
