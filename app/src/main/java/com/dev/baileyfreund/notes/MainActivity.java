@@ -166,8 +166,8 @@ public class MainActivity extends AppCompatActivity {
                 final EditText taskEditText = new EditText(this);
                 AlertDialog dialog = new AlertDialog.Builder(this)
                         .setTitle("Add a new note")
-                        .setMessage("Type noteworthy note here")
-                        .setView(taskEditText) //@TODO: 11/15/16 Create a second EditText in the alertDialog for the title, then pass that value to the col_note_title value, and the other to the col_note_body value in the db
+                        .setMessage("Type something noteworthy here")
+                        .setView(taskEditText)
                         .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
